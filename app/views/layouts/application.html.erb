@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TwitterLike</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <p class="navbar-text">
+    <span style="padding-right:20px;"><%= link_to 'Twitter-Like', root_path %></span>
+    <% if user_signed_in? %>
+      <%= link_to 'New Tweet', new_tweet_path(@user) %> | 
+      <%= link_to 'My profile', user_profile_path(current_user.id), :class => 'navbar-link' %> |
+      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+       Logged in as <strong><%= current_user.email %></strong> | 
+       <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+    <% else %>
+      <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+      <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+    <% end %>
+  </p>
+    <%= yield %>
+  </body>
+</html>

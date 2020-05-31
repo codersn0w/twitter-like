@@ -1,0 +1,29 @@
+<div>
+  <% @tweets.reverse.each do |tweet| %>
+    <p>
+      <tr>
+        <div  class="tweet">
+          <h3 class="black"><td><%= link_to tweet.user.username, user_profile_path(tweet.user) %></td></h3>
+          <h2><td><%= tweet.body %></td></h2>
+          <h3><td><%= tweet.created_at %></td></h3>
+          <% if current_user.liked? tweet %>
+            <%= link_to dislike_tweet_path(tweet.id), method: :put do %>
+                <%= image_tag("like.png", :alt => "Like", height: 18, width: 20) %>
+                <%= tweet.get_likes.size %>
+            <% end %>
+          <% else %>
+            <%= link_to like_tweet_path(tweet), method: :put do %>
+                <%= image_tag("dislike.png", :alt => "Like", height: 18, width: 20) %>
+                <%= tweet.get_likes.size %>
+            <% end %>
+          <% end %>
+          <% if current_user == tweet.user %>
+          <span class="twitter-button">
+            <%= link_to "Delete", tweet_path(tweet.id), :confirm => "Are you sure?", :method => :delete %>
+          </span>
+          <% end %>
+        </div>
+      </tr>
+    </p>
+  <% end %>
+</div>
